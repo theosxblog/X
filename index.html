@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #111;
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), #111), url('https://source.unsplash.com/1600x900/?nature,abstract');
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        .hero h2 {
+            font-size: 40px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .blogs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 50px 20px;
+            flex-wrap: wrap;
+        }
+
+        .blog-card {
+            width: 320px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            transition: 0.5s;
+            cursor: pointer;
+            transform: translateY(20px);
+            animation: fadeIn 1s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 400px;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            animation: fadeInPopup 0.5s ease-in-out;
+        }
+
+        .popup img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .popup h2 {
+            margin-bottom: 10px;
+        }
+
+        .popup p {
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .popup button {
+            margin-top: 15px;
+            background: crimson;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .popup button:hover {
+            background: darkred;
+        }
+
+        @keyframes fadeInPopup {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="logo">Avishkar Kubal</h1>
+    </header>
+
+    <section class="hero">
+        <h2>Welcome to my Blogging</h2>
+        <p>Experience an immersive reading journey.</p>
+    </section>
+
+    <section class="blogs">
+        <div class="blog-card" onclick="openBlogPopup('Blog Title 1', `The world around us had melted into a quiet reverie—the sky, heavy with clouds, hummed a lullaby only the wind could hear. The vast stretch of green beneath our feet was untouched, save for the imprints we left as we wandered toward the great tree that stood alone, watching over the land with a silent, knowing presence. It felt as though we had stepped out of time itself, away from the rush of life, into a realm where only the whisper of the wind and the rustle of leaves mattered.
+
+You slipped your fingers into mine, the warmth of your touch a quiet contrast to the cool breath of the air. We walked without speaking, for words felt unnecessary in a place like this—where silence wasn't empty but full, thick with the weight of unspoken emotions.
+
+Beneath the tree’s vast canopy, we sat upon the emerald embrace of the grass, leaning into each other, listening—to the quiet, to the rhythm of our breaths, to the distant murmur of a world we had left behind.
+
+Perhaps the tree had seen a thousand lovers sit beneath its shade, had listened to the murmurs of hearts woven together by time. But for now, in this hush of green and sky, in this pause between breaths, there was only us.`, 'tree.jpg')">
+            <img src="tree.jpg" alt="Tree">
+            <h3>A Moment Suspended in Time</h3>
+            <p>The world around us...</p>
+        </div>
+    </section>
+
+    <div class="popup-overlay" id="blogPopup">
+        <div class="popup">
+            <img id="popupImage" src="" alt="Blog Image">
+            <h2 id="popupTitle">Blog Title</h2>
+            <p id="popupContent">Full blog content goes here...</p>
+            <button onclick="closeBlogPopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openBlogPopup(title, content, imageUrl) {
+            document.getElementById('popupTitle').innerText = title;
+            document.getElementById('popupContent').innerHTML = content.replace(/\n/g, "<br>"); // Preserve formatting
+            document.getElementById('popupImage').src = imageUrl;
+            document.getElementById('blogPopup').style.display = 'flex';
+        }
+
+        function closeBlogPopup() {
+            document.getElementById('blogPopup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
